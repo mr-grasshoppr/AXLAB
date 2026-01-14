@@ -142,33 +142,31 @@
         }
 
         .iterate-button {
-            background: none;
-            border: none;
-            color: #008B8B; /* Dark teal */
-            font-size: 1.2rem;
-            font-weight: 700;
+            padding: 4px 12px;
+            background: transparent;
+            color: #999;
+            border: 1px solid #e5e5e5;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 400;
             font-style: italic;
             cursor: pointer;
-            padding: 8px 4px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            transition: all 0.1s ease;
+            transition: all 0.2s ease;
             font-family: inherit;
         }
 
         .iterate-button:hover {
-            color: #006B6B; /* Darker teal on hover */
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
-            transform: translateY(-1px);
+            color: #666;
+            border-color: #ccc;
+            background: #fafafa;
         }
 
-        .iterate-button:active,
-        .iterate-button.loading {
-            text-shadow: none;
-            transform: translateY(2px);
+        .iterate-button:active {
+            background: #f0f0f0;
         }
 
         .iterate-button.loading {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: wait;
         }
 
@@ -596,7 +594,8 @@
             }
 
             .iterate-button {
-                font-size: 1rem;
+                font-size: 0.7rem;
+                padding: 3px 10px;
             }
 
             .hero h1 {
@@ -741,7 +740,7 @@
             <!-- Interactive Generative Logo -->
             <div class="generative-logo-container">
                 <img id="generative-logo" src="AXL_logo.png" alt="AXL Logo">
-                <button id="iterate-logo" class="iterate-button">Generate!</button>
+                <button id="iterate-logo" class="iterate-button">Iterate!</button>
             </div>
         </div>
     </div>
