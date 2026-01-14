@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Experience Lab</title>
+    <link rel="icon" type="image/png" href="AXL_favicon2.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Optional: Background image/GIF container */
+        .background-graphic {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4; /* Adjust this to control visibility */
+            background-image: url('your-animated.gif'); /* Replace with your GIF path */
+            background-size: cover; /* or 'contain' depending on your preference */
+            background-position: center;
+            background-repeat: no-repeat;
+            display: none; /* Set to 'block' when you add your GIF */
+        }
+
+        /* Main content wrapper */
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            background: transparent;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e5e5e5;
+            z-index: 1000;
+            padding: 25px 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
+        }
+
+        .logo span {
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+
+        /* Hero */
+        .hero {
+            margin-top: 80px;
+            padding: 120px 40px 100px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-content {
+            display: flex;
+            gap: 60px;
+            align-items: flex-start;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        /* Generative Logo */
+        .generative-logo-container {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #generative-logo {
+            height: 200px;
+            width: auto;
+            transition: opacity 0.3s ease;
+        }
+
+        #generative-logo.loading {
+            opacity: 0.4;
+        }
+
+        .iterate-button {
+            padding: 6px 16px;
+            background: transparent;
+            color: #666;
+            border: 1px solid #e5e5e5;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            text-transform: lowercase;
+        }
+
+        .iterate-button:hover {
+            color: #1a1a1a;
+            border-color: #ccc;
+            background: #fafafa;
+        }
+
+        .iterate-button:active {
+            background: #f0f0f0;
+        }
+
+        .iterate-button.loading {
+            opacity: 0.4;
+            cursor: wait;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            max-width: 900px;
+            margin-bottom: 40px;
+        }
+
+        .hero-description {
+            font-size: 1.5rem;
+            color: #666;
+            max-width: 700px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Sections */
+        .section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 40px;
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #999;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.7;
+            max-width: 800px;
+            margin-bottom: 30px;
+        }
+
+        /* Work Section - Horizontal Scroll */
+        .work-section-wrapper {
+            position: relative;
+            padding: 100px 0;
+            overflow: hidden;
+        }
+
+        .work-section-header {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px 60px;
+        }
+
+        .horizontal-scroll-container {
+            position: relative;
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 0 40px;
+        }
+
+        .horizontal-scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .work-track {
+            display: flex;
+            gap: 40px;
+            width: max-content;
+            padding-bottom: 20px;
+        }
+
+        .work-card {
+            flex-shrink: 0;
+            width: 500px;
+            background: #ffffff;
+            border-radius: 2px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .work-card-image {
+            width: 100%;
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Fallback gradient for cards without images */
+        .work-card:nth-child(1) .work-card-image:not([style*="background-image"]) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .work-card:nth-child(2) .work-card-image:not([style*="background-image"]) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .work-card:nth-child(3) .work-card-image:not([style*="background-image"]) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .work-card:nth-child(4) .work-card-image:not([style*="background-image"]) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .work-card-content {
+            padding: 30px;
+        }
+
+        .work-card h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            letter-spacing: -0.01em;
+        }
+
+        .work-card p {
+            color: #666;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .work-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .work-tag {
+            font-size: 0.75rem;
+            color: #999;
+            padding: 4px 12px;
+            border: 1px solid #e5e5e5;
+            border-radius: 20px;
+        }
+
+        /* Scroll hint */
+        .scroll-hint {
+            display: none; /* Replaced with navigation arrows */
+        }
+
+        /* Carousel Navigation Arrows */
+        .carousel-wrapper {
+            position: relative;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e5e5e5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+
+        .carousel-nav:hover {
+            opacity: 1;
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-nav.left {
+            left: 10px;
+        }
+
+        .carousel-nav.right {
+            right: 10px;
+        }
+
+        .carousel-nav svg {
+            width: 20px;
+            height: 20px;
+            stroke: #1a1a1a;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        /* Work Grid - keeping for fallback on mobile */
+        .work-grid {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .horizontal-scroll-container {
+                display: none;
+            }
+
+            .work-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 40px;
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+
+            .work-item {
+                display: block;
+                text-decoration: none;
+                color: inherit;
+            }
+
+            .work-item-image {
+                width: 100%;
+                height: 300px;
+                background: #f5f5f5;
+                margin-bottom: 20px;
+                border-radius: 2px;
+            }
+
+            .work-item h3 {
+                font-size: 1.5rem;
+                font-weight: 500;
+                margin-bottom: 15px;
+                letter-spacing: -0.01em;
+            }
+
+            .work-item p {
+                color: #666;
+                font-size: 1.05rem;
+                line-height: 1.6;
+            }
+
+            .scroll-hint {
+                display: none;
+            }
+        }
+
+        /* Capabilities */
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        @media (min-width: 1200px) {
+            .capabilities-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .capabilities-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .capability {
+            padding: 0;
+        }
+
+        .capability h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            letter-spacing: -0.01em;
+        }
+
+        .capability p {
+            color: #666;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* Clients */
+        /* Clients/Collaborators - Horizontal Scroll */
+        .clients-track {
+            display: flex;
+            gap: 40px;
+            width: max-content;
+            padding-bottom: 20px;
+            align-items: center;
+        }
+
+        .client-logo {
+            flex-shrink: 0;
+            width: 280px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.6;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .client-logo:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .client-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%);
+            transition: filter 0.3s;
+        }
+
+        .client-logo:hover img {
+            filter: grayscale(0%);
+        }
+
+        /* Placeholder styling for text logos (remove when you add images) */
+        .client-logo .text-placeholder {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #999;
+            text-align: center;
+        }
+
+        /* Fallback grid for clients (unused now, but kept for reference) */
+        .clients-grid {
+            display: none;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: #fafafa;
+            padding: 120px 40px;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-size: 3rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 30px;
+        }
+
+        .contact-email {
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            text-decoration: none;
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 2px;
+            transition: opacity 0.3s;
+        }
+
+        .contact-email:hover {
+            opacity: 0.6;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .footer-left {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-right a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-right a:hover {
+            color: #1a1a1a;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 20px 60px;
+            }
+
+            .hero-content {
+                flex-direction: column;
+                gap: 40px;
+                align-items: center;
+            }
+
+            .hero-text {
+                text-align: center;
+            }
+
+            #generative-logo {
+                height: 120px;
+            }
+
+            .iterate-button {
+                padding: 6px 14px;
+                font-size: 0.75rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-description {
+                font-size: 1.2rem;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .work-section-wrapper {
+                padding: 60px 0;
+            }
+
+            .work-section-header {
+                padding: 0 20px 40px;
+            }
+
+            .carousel-nav {
+                display: none;
+            }
+
+            .capabilities-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .clients-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 30px;
+            }
+
+            .nav-container {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                gap: 20px;
+                font-size: 0.85rem;
+            }
+
+            .logo span {
+                display: none;
+            }
+
+            .logo img {
+                height: 28px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .contact-section h2 {
+                font-size: 2rem;
+            }
+
+            .contact-email {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Optional: Background graphic container -->
+    <!-- To use: 
+         1. Add your animated GIF to the same folder as index.html
+         2. Update the CSS above: change 'your-animated.gif' to your filename
+         3. Change 'display: none' to 'display: block' in .background-graphic CSS
+         4. Adjust opacity value to your preference (0.1 = very subtle, 0.5 = medium, 1 = full)
+    -->
+    <div class="background-graphic"></div>
+    
+    <!-- Main content wrapper -->
+    <div class="content-wrapper">
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="AXL_logo.png" alt="Art Experience Lab">
+                <span>Art Experience Lab</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#work">Projects</a></li>
+                <li><a href="#capabilities">How</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Building a thriving future for creatives in a rapidly changing landscape</h1>
+                <p class="hero-description">Art Experience Lab is a research and design practice that collaborates with researchers, practitioners, and product teams to discover new ways to support creative work.</p>
+            </div>
+            
+            <!-- Interactive Generative Logo -->
+            <div class="generative-logo-container">
+                <img id="generative-logo" src="AXL_logo.png" alt="AXL Logo">
+                <button id="iterate-logo" class="iterate-button">generate</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Work Section - Horizontal Scroll -->
+    <div id="work" class="work-section-wrapper">
+        <div class="work-section-header">
+            <div class="section-label">Projects</div>
+            <h2 class="section-title">We lead projects at the intersection of design, technology, and community</h2>
+        </div>
+        
+        <!-- Carousel with navigation -->
+        <div class="carousel-wrapper">
+            <button class="carousel-nav left" aria-label="Scroll left" onclick="scrollCarousel('work-carousel', -1)">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            
+            <button class="carousel-nav right" aria-label="Scroll right" onclick="scrollCarousel('work-carousel', 1)">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+            
+            <!-- Horizontal scroll container -->
+            <div class="horizontal-scroll-container" id="work-carousel">
+                <div class="work-track">
+                    <div class="work-card">
+                        <div class="work-card-image" style="background-image: url('lovegrove.jpg'); background-size: cover; background-position: center;"></div>
+                        <div class="work-card-content">
+                            <h3>Generative Furniture with Ross Lovegrove</h3>
+                            <p>Research and content strategy for a collaboration exploring how AI image generation can inform industrial design practices. Working with Google DeepMind, Ross Lovegrove, and Modem, we experimented with how AI-generated concepts translated into physical furniture prototypes. Results shaped DeepMind's product strategy for image generation.</p>
+                            <div class="work-meta">
+                                <span class="work-tag">AI-Augmented Design</span>
+                                <span class="work-tag">Product Strategy</span>
+                                <span class="work-tag">Research</span>
+                                <span class="work-tag">Content Design</span>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <a href="https://blog.google/innovation-and-ai/models-and-research/google-deepmind/ross-lovegrove-design/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5; margin-right: 15px;">Google Blog →</a>
+                                <a href="https://www.dezeen.com/2025/12/19/ross-lovegrove-google-deepmind-ai-chair-design/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">Dezeen Article →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="work-card">
+                        <div class="work-card-image" style="background-image: url('workshop.png'); background-size: cover; background-position: center;"></div>
+                        <div class="work-card-content">
+                            <h3>AI & Design Workshops</h3>
+                            <p>Teaching professionals to use AI to "bias towards action"—making artifacts with AI to deepen understanding, test ideas, and make decisions. Workshops offered through Stanford d.school's professional education program.</p>
+                            <div class="work-meta">
+                                <span class="work-tag">AI-Augmented Design</span>
+                                <span class="work-tag">Teaching</span>
+                                <span class="work-tag">Curriculum Design</span>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <a href="https://dschool.stanford.edu/innovate/professional-education" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">Learn more →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="work-card">
+                        <div class="work-card-image" style="background-image: url('Veo.png'); background-size: cover; background-position: center;"></div>
+                        <div class="work-card-content">
+                            <h3>Generative Media Research</h3>
+                            <p>Foundational research on how creators integrate AI image and video generation into their workflows. This research informed product strategy for Google DeepMind's Imagen and Veo models.</p>
+                            <div class="work-meta">
+                                <span class="work-tag">AI-Augmented Design</span>
+                                <span class="work-tag">Product Strategy</span>
+                                <span class="work-tag">Research</span>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <a href="https://blog.google/products-and-platforms/products/gemini/updated-image-editing-model/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5; margin-right: 15px;">Imagen 3 →</a>
+                                <a href="https://developers.googleblog.com/veo-3-now-available-gemini-api/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">Veo 2 →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="work-card">
+                        <div class="work-card-image" style="background-image: url('codesign.jpeg'); background-size: cover; background-position: center;"></div>
+                        <div class="work-card-content">
+                            <h3>AI-Augmented Design Community</h3>
+                            <p>Building a community of experts and practitioners across sectors to learn together and shape the future of creative work.</p>
+                            <div class="work-meta">
+                                <span class="work-tag">AI-Augmented Design</span>
+                                <span class="work-tag">Research</span>
+                                <span class="work-tag">Community Building</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile fallback grid -->
+        <div class="work-grid">
+            <div class="work-item">
+                <div class="work-item-image"></div>
+                <h3>AI-Augmented Design Community of Practice</h3>
+                <p>Building a cross-sector network exploring how AI transforms design processes through collaborative learning and hands-on experimentation.</p>
+                <div class="work-meta">
+                    <span class="work-tag">Stanford d.school</span>
+                    <span class="work-tag">Google DeepMind</span>
+                    <span class="work-tag">Cornell University</span>
+                </div>
+            </div>
+            
+            <div class="work-item">
+                <div class="work-item-image"></div>
+                <h3>AI & Design Curriculum</h3>
+                <p>Teaching designers to develop a "bias towards action" when working with AI—moving from conversation to creation through making.</p>
+                <div class="work-meta">
+                    <span class="work-tag">Stanford d.school</span>
+                    <span class="work-tag">Workshop Design</span>
+                </div>
+            </div>
+            
+            <div class="work-item">
+                <div class="work-item-image"></div>
+                <h3>Generative AI User Research</h3>
+                <p>Foundational research on how digital creators integrate AI tools into their workflows, informing product strategy and design decisions.</p>
+                <div class="work-meta">
+                    <span class="work-tag">Google DeepMind</span>
+                    <span class="work-tag">UX Research</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How Section -->
+    <section id="capabilities" class="section" style="background: #fafafa;">
+        <div class="section-label">How</div>
+        
+        <div class="capabilities-grid">
+            <div class="capability">
+                <h3>Workshop Design & Facilitation</h3>
+                <p>Participatory experiences that help teams prototype with emerging technologies, develop new collaborative practices, and align on strategy.</p>
+            </div>
+            
+            <div class="capability">
+                <h3>Foundational Research</h3>
+                <p>Qualitative and quantitative research on creative work and emerging technologies, grounded in ethics and critical inquiry. Our work informs strategy, guides decision-making, and supports sustainable futures for creative practitioners.</p>
+            </div>
+            
+            <div class="capability">
+                <h3>Multimedia Storytelling</h3>
+                <p>Translating research into compelling multimedia experiences and video narratives that bring real-world contexts to life.</p>
+            </div>
+            
+            <div class="capability">
+                <h3>Design Experiments</h3>
+                <p>Building digital and physical prototypes to explore emerging technologies—making abstract capabilities tangible and showing what's possible for creative work.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collaborators Section -->
+    <section class="section">
+        <div class="section-label">Clients & Collaborators</div>
+        
+        <!-- 
+        TO ADD LOGOS:
+        1. Save logo files (PNG or SVG) to the same folder as index.html
+        2. Replace src="logo-filename.png" with your actual filename
+        3. Remove the "text-placeholder" class from the div
+        
+        Recommended: Use transparent PNG or SVG files for best results
+        Logo sources: Company press kits, Wikimedia Commons, or official brand pages
+        -->
+        
+        <div class="carousel-wrapper">
+            <button class="carousel-nav left" aria-label="Scroll left" onclick="scrollCarousel('clients-carousel', -1)">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            
+            <button class="carousel-nav right" aria-label="Scroll right" onclick="scrollCarousel('clients-carousel', 1)">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+            
+            <div class="horizontal-scroll-container" id="clients-carousel">
+                <div class="clients-track">
+                    <div class="client-logo">
+                        <img src="Deepmind_logo.png" alt="Google DeepMind" />
+                    </div>
+                    
+                    <div class="client-logo">
+                        <img src="dschool_logo.jpeg" alt="Stanford d.school" />
+                    </div>
+                    
+                    <div class="client-logo">
+                        <img src="CZI_logo.png" alt="Chan Zuckerberg Initiative" />
+                    </div>
+                    
+                    <div class="client-logo">
+                        <img src="meta_logo.png" alt="Meta" />
+                    </div>
+                    
+                    <div class="client-logo">
+                        <img src="mozilla_logo.jpeg" alt="Mozilla" />
+                    </div>
+                    
+                    <div class="client-logo">
+                        <img src="Tech_logo.png" alt="The Tech Interactive" />
+                    </div>
+
+                    <div class="client-logo">
+                        <img src="Google_logo.png" alt="Google" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <h2>Let's work together</h2>
+        <a href="mailto:hello@axlab.io" class="contact-email">hello@axlab.io</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-left">
+            © 2026 AXLab
+        </div>
+        <div class="footer-right">
+            <a href="#work">Work</a>
+            <a href="#capabilities">Capabilities</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </footer>
+    
+    </div><!-- End content wrapper -->
+
+    <script>
+        // ========================================
+        // Generative Logo Iteration
+        // ========================================
+        const logoElement = document.getElementById('generative-logo');
+        const iterateButton = document.getElementById('iterate-logo');
+        
+        // Array of logo variations
+        const logoVariations = [
+            'AXL_logo.png',           // Original
+            'AXL_clips.jpeg',
+            'AXL_glass.jpeg',
+            'AXL_ice.jpeg',
+            'AXL_slugs.jpeg',
+            'AXL_paper.jpeg',
+            'AXL_3dprint.jpeg',
+            'AXL_neon.jpeg',
+            'AXL_cookie.jpeg',
+            'AXL_smoke.jpeg',
+            'AXL_ceramic.jpeg',
+            'AXL_fur.jpeg',
+            'AXL_sketch.jpeg'
+        ];
+        
+        let currentLogoIndex = 0;
+        
+        iterateButton.addEventListener('click', () => {
+            // Prevent multiple clicks while loading
+            if (iterateButton.classList.contains('loading')) return;
+            
+            // Add loading state
+            iterateButton.classList.add('loading');
+            logoElement.classList.add('loading');
+            
+            // Move to next logo
+            currentLogoIndex = (currentLogoIndex + 1) % logoVariations.length;
+            const nextLogo = logoVariations[currentLogoIndex];
+            
+            // Preload the image
+            const img = new Image();
+            img.onload = () => {
+                // Smooth transition
+                logoElement.src = nextLogo;
+                setTimeout(() => {
+                    logoElement.classList.remove('loading');
+                    iterateButton.classList.remove('loading');
+                }, 300);
+            };
+            img.onerror = () => {
+                // If image doesn't load, still remove loading state
+                console.log('Could not load logo:', nextLogo);
+                logoElement.classList.remove('loading');
+                iterateButton.classList.remove('loading');
+                // Go back to previous working logo
+                currentLogoIndex = (currentLogoIndex - 1 + logoVariations.length) % logoVariations.length;
+            };
+            img.src = nextLogo;
+        });
+        
+        // ========================================
+        // Carousel Navigation Function
+        // ========================================
+        function scrollCarousel(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            const scrollAmount = 540; // Approximate width of one card + gap
+            carousel.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+        
+        // ========================================
+        // Smooth Horizontal Scroll
+        // ========================================
+        const horizontalContainers = document.querySelectorAll('.horizontal-scroll-container');
+        
+        horizontalContainers.forEach(container => {
+            if (container) {
+                // Smooth scroll with mouse wheel - but only if scrolling horizontally
+                container.addEventListener('wheel', (e) => {
+                    // Only prevent default if there's horizontal scrollability
+                    const hasHorizontalScroll = container.scrollWidth > container.clientWidth;
+                    
+                    if (hasHorizontalScroll && Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                        // Horizontal scroll detected
+                        e.preventDefault();
+                        container.scrollLeft += e.deltaX || e.deltaY;
+                    } else if (hasHorizontalScroll && e.deltaY !== 0) {
+                        // Vertical scroll over horizontal container
+                        // Convert vertical scroll to horizontal
+                        const atStart = container.scrollLeft === 0;
+                        const atEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth - 1;
+                        
+                        // Only hijack scroll if not at edges
+                        if (!atStart && !atEnd) {
+                            e.preventDefault();
+                            container.scrollLeft += e.deltaY;
+                        }
+                    }
+                });
+            }
+        });
+        
+        // ========================================
+        // Card Animation on Scroll
+        // ========================================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe capability cards and other elements
+        document.querySelectorAll('.capability, .work-card, .client-logo').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
