@@ -134,11 +134,42 @@
         #generative-logo {
             height: 200px;
             width: auto;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 0.4s ease;
         }
 
-        #generative-logo.fading {
-            opacity: 0;
+        #generative-logo.loading {
+            opacity: 0.3;
+        }
+
+        .iterate-button {
+            background: none;
+            border: none;
+            color: #008B8B; /* Dark teal */
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-style: italic;
+            cursor: pointer;
+            padding: 8px 4px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.1s ease;
+            font-family: inherit;
+        }
+
+        .iterate-button:hover {
+            color: #006B6B; /* Darker teal on hover */
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .iterate-button:active,
+        .iterate-button.loading {
+            text-shadow: none;
+            transform: translateY(2px);
+        }
+
+        .iterate-button.loading {
+            opacity: 0.5;
+            cursor: wait;
         }
 
         .hero h1 {
@@ -564,6 +595,10 @@
                 height: 120px;
             }
 
+            .iterate-button {
+                font-size: 1rem;
+            }
+
             .hero h1 {
                 font-size: 2.5rem;
             }
@@ -706,6 +741,7 @@
             <!-- Interactive Generative Logo -->
             <div class="generative-logo-container">
                 <img id="generative-logo" src="AXL_logo.png" alt="AXL Logo">
+                <button id="iterate-logo" class="iterate-button">Generate!</button>
             </div>
         </div>
     </div>
@@ -947,57 +983,94 @@
 
     <script>
         // ========================================
-        // Generative Logo Auto-Cycling
+        // Generative Logo - Button Click
         // ========================================
         const logoElement = document.getElementById('generative-logo');
+        const iterateButton = document.getElementById('iterate-logo');
         
         if (!logoElement) {
             console.error('Logo element not found!');
+        } else {
+            console.log('Logo element found');
+        }
+        
+        if (!iterateButton) {
+            console.error('Button element not found!');
+        } else {
+            console.log('Button element found');
         }
         
         // Array of logo variations
         const logoVariations = [
             'AXL_logo.png',           // Original
-            'AXL_3dprint.jpeg',
-            'AXL_ceramic.jpeg',
-            'AXL_clips.jpeg',
-            'AXL_cookie.jpeg',
-            'AXL_fur.jpeg',
-            'AXL_glass.jpeg',
-            'AXL_ice.jpeg',
-            'AXL_neon.jpeg',
-            'AXL_paper.jpeg',
-            'AXL_sketch.jpeg',
-            'AXL_slugs.jpeg',
-            'AXL_smoke.jpeg',
-            'AXL_wood.jpeg'
+            'AXL_3dprint.png',
+            'AXL_ceramic.png',
+            'AXL_clips.png',
+            'AXL_cookie.png',
+            'AXL_fur.png',
+            'AXL_glass.png',
+            'AXL_ice.png',
+            'AXL_neon.png',
+            'AXL_paper.png',
+            'AXL_sketch.png',
+            'AXL_slugs.png',
+            'AXL_smoke.png',
+            'AXL_wood.png'
         ];
         
         let currentLogoIndex = 0;
         
+        console.log('Starting with', logoVariations.length, 'logo variations');
+        
         // Preload all images
-        logoVariations.forEach(src => {
+        logoVariations.forEach((src, index) => {
             const img = new Image();
+            img.onload = () => console.log('Preloaded:', src);
+            img.onerror = () => console.error('Failed to preload:', src);
             img.src = src;
         });
         
-        function cycleLogo() {
-            // Fade out
-            logoElement.classList.add('fading');
-            
-            setTimeout(() => {
-                // Change image while faded
-                currentLogoIndex = (currentLogoIndex + 1) % logoVariations.length;
-                logoElement.src = logoVariations[currentLogoIndex];
+        if (iterateButton) {
+            iterateButton.addEventListener('click', (e) => {
+                e.preventDefault();
                 
-                // Fade back in
-                logoElement.classList.remove('fading');
-            }, 1000); // Wait for fade out to complete
-        }
-        
-        // Start cycling - change every 4 seconds
-        if (logoElement) {
-            setInterval(cycleLogo, 4000);
+                // Prevent multiple clicks while loading
+                if (iterateButton.classList.contains('loading')) {
+                    console.log('Already loading, skipping...');
+                    return;
+                }
+                
+                console.log('Button clicked! Current index:', currentLogoIndex);
+                
+                // Add loading state (removes shadow, depresses button)
+                iterateButton.classList.add('loading');
+                logoElement.classList.add('loading');
+                
+                // Move to next logo
+                currentLogoIndex = (currentLogoIndex + 1) % logoVariations.length;
+                const nextLogo = logoVariations[currentLogoIndex];
+                console.log('Loading:', nextLogo);
+                
+                // Preload the image
+                const img = new Image();
+                img.onload = () => {
+                    console.log('Image loaded successfully:', nextLogo);
+                    // Smooth transition
+                    logoElement.src = nextLogo;
+                    setTimeout(() => {
+                        logoElement.classList.remove('loading');
+                        iterateButton.classList.remove('loading');
+                    }, 400);
+                };
+                img.onerror = () => {
+                    console.error('Could not load logo:', nextLogo);
+                    logoElement.classList.remove('loading');
+                    iterateButton.classList.remove('loading');
+                    // Go back to previous working logo
+                    currentLogoIndex = (currentLogoIndex - 1 + logoVariations.length) % logoVariations.length;
+                };
+                img.src = nextLogo;
+            });
         }
         
         // ========================================
