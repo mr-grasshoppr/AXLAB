@@ -134,40 +134,11 @@
         #generative-logo {
             height: 200px;
             width: auto;
-            transition: opacity 0.3s ease;
+            transition: opacity 1s ease-in-out;
         }
 
-        #generative-logo.loading {
-            opacity: 0.4;
-        }
-
-        .iterate-button {
-            padding: 6px 16px;
-            background: transparent;
-            color: #666;
-            border: 1px solid #e5e5e5;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 400;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: inherit;
-            text-transform: lowercase;
-        }
-
-        .iterate-button:hover {
-            color: #1a1a1a;
-            border-color: #ccc;
-            background: #fafafa;
-        }
-
-        .iterate-button:active {
-            background: #f0f0f0;
-        }
-
-        .iterate-button.loading {
-            opacity: 0.4;
-            cursor: wait;
+        #generative-logo.fading {
+            opacity: 0;
         }
 
         .hero h1 {
@@ -593,11 +564,6 @@
                 height: 120px;
             }
 
-            .iterate-button {
-                padding: 6px 14px;
-                font-size: 0.75rem;
-            }
-
             .hero h1 {
                 font-size: 2.5rem;
             }
@@ -624,6 +590,34 @@
 
             .carousel-nav {
                 display: none;
+            }
+
+            .horizontal-scroll-container {
+                overflow-x: visible;
+                padding: 0 20px;
+            }
+
+            .work-track {
+                flex-direction: column;
+                gap: 40px;
+                width: 100%;
+            }
+
+            .work-card {
+                width: 100%;
+                max-width: none;
+            }
+
+            .work-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .work-card p {
+                font-size: 1rem;
+            }
+
+            .work-card-content {
+                padding: 25px;
             }
 
             .capabilities-grid {
@@ -712,7 +706,6 @@
             <!-- Interactive Generative Logo -->
             <div class="generative-logo-container">
                 <img id="generative-logo" src="AXL_logo.png" alt="AXL Logo">
-                <button id="iterate-logo" class="iterate-button">generate</button>
             </div>
         </div>
     </div>
@@ -744,7 +737,7 @@
                     <div class="work-card">
                         <div class="work-card-image" style="background-image: url('lovegrove.jpg'); background-size: cover; background-position: center;"></div>
                         <div class="work-card-content">
-                            <h3>Generative Furniture with Ross Lovegrove</h3>
+                            <h3>Generative Furniture</h3>
                             <p>Research and content strategy for a collaboration exploring how AI image generation can inform industrial design practices. Working with Google DeepMind, Ross Lovegrove, and Modem, we experimented with how AI-generated concepts translated into physical furniture prototypes. Results shaped DeepMind's product strategy for image generation.</p>
                             <div class="work-meta">
                                 <span class="work-tag">AI-Augmented Design</span>
@@ -762,8 +755,8 @@
                     <div class="work-card">
                         <div class="work-card-image" style="background-image: url('workshop.png'); background-size: cover; background-position: center;"></div>
                         <div class="work-card-content">
-                            <h3>AI & Design Workshops</h3>
-                            <p>Teaching professionals to use AI to "bias towards action"—making artifacts with AI to deepen understanding, test ideas, and make decisions. Workshops offered through Stanford d.school's professional education program.</p>
+                            <h3>Design Workshops</h3>
+                            <p>Teaching design methods, including how to "make" with AI at every stage of the process: to deepen understanding, generate ideas, and test concepts. Workshops offered through Stanford d.school's professional education program.</p>
                             <div class="work-meta">
                                 <span class="work-tag">AI-Augmented Design</span>
                                 <span class="work-tag">Teaching</span>
@@ -778,7 +771,7 @@
                     <div class="work-card">
                         <div class="work-card-image" style="background-image: url('Veo.png'); background-size: cover; background-position: center;"></div>
                         <div class="work-card-content">
-                            <h3>Generative Media Research</h3>
+                            <h3>GenAI Research</h3>
                             <p>Foundational research on how creators integrate AI image and video generation into their workflows. This research informed product strategy for Google DeepMind's Imagen and Veo models.</p>
                             <div class="work-meta">
                                 <span class="work-tag">AI-Augmented Design</span>
@@ -786,8 +779,8 @@
                                 <span class="work-tag">Research</span>
                             </div>
                             <div style="margin-top: 15px;">
-                                <a href="https://blog.google/products-and-platforms/products/gemini/updated-image-editing-model/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5; margin-right: 15px;">Imagen 3 →</a>
-                                <a href="https://developers.googleblog.com/veo-3-now-available-gemini-api/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">Veo 2 →</a>
+                                <a href="https://blog.google/products-and-platforms/products/gemini/updated-image-editing-model/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5; margin-right: 15px;">Image Gen →</a>
+                                <a href="https://developers.googleblog.com/veo-3-now-available-gemini-api/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">Video Gen →</a>
                             </div>
                         </div>
                     </div>
@@ -795,7 +788,7 @@
                     <div class="work-card">
                         <div class="work-card-image" style="background-image: url('codesign.jpeg'); background-size: cover; background-position: center;"></div>
                         <div class="work-card-content">
-                            <h3>AI-Augmented Design Community</h3>
+                            <h3>AI-Augmented Design</h3>
                             <p>Building a community of experts and practitioners across sectors to learn together and shape the future of creative work.</p>
                             <div class="work-meta">
                                 <span class="work-tag">AI-Augmented Design</span>
@@ -954,75 +947,57 @@
 
     <script>
         // ========================================
-        // Generative Logo Iteration
+        // Generative Logo Auto-Cycling
         // ========================================
         const logoElement = document.getElementById('generative-logo');
-        const iterateButton = document.getElementById('iterate-logo');
         
-        if (!logoElement || !iterateButton) {
-            console.error('Logo elements not found!');
+        if (!logoElement) {
+            console.error('Logo element not found!');
         }
         
         // Array of logo variations
         const logoVariations = [
             'AXL_logo.png',           // Original
-            'AXL_clips.png',
-            'AXL_glass.png',
-            'AXL_ice.png',
-            'AXL_slugs.png',
-            'AXL_paper.png',
-            'AXL_3dprint.png',
-            'AXL_neon.png',
-            'AXL_cookie.png',
-            'AXL_smoke.png',
-            'AXL_ceramic.png',
-            'AXL_fur.png',
-            'AXL_sketch.png'
+            'AXL_3dprint.jpeg',
+            'AXL_ceramic.jpeg',
+            'AXL_clips.jpeg',
+            'AXL_cookie.jpeg',
+            'AXL_fur.jpeg',
+            'AXL_glass.jpeg',
+            'AXL_ice.jpeg',
+            'AXL_neon.jpeg',
+            'AXL_paper.jpeg',
+            'AXL_sketch.jpeg',
+            'AXL_slugs.jpeg',
+            'AXL_smoke.jpeg',
+            'AXL_wood.jpeg'
         ];
         
         let currentLogoIndex = 0;
         
-        if (iterateButton) {
-            iterateButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log('Button clicked! Current index:', currentLogoIndex);
-                
-                // Prevent multiple clicks while loading
-                if (iterateButton.classList.contains('loading')) {
-                    console.log('Already loading, skipping...');
-                    return;
-                }
-                
-                // Add loading state
-                iterateButton.classList.add('loading');
-                logoElement.classList.add('loading');
-                
-                // Move to next logo
+        // Preload all images
+        logoVariations.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+        
+        function cycleLogo() {
+            // Fade out
+            logoElement.classList.add('fading');
+            
+            setTimeout(() => {
+                // Change image while faded
                 currentLogoIndex = (currentLogoIndex + 1) % logoVariations.length;
-                const nextLogo = logoVariations[currentLogoIndex];
-                console.log('Loading next logo:', nextLogo);
+                logoElement.src = logoVariations[currentLogoIndex];
                 
-                // Preload the image
-                const img = new Image();
-                img.onload = () => {
-                    console.log('Image loaded successfully:', nextLogo);
-                    // Smooth transition
-                    logoElement.src = nextLogo;
-                    setTimeout(() => {
-                        logoElement.classList.remove('loading');
-                        iterateButton.classList.remove('loading');
-                    }, 300);
-                };
-                img.onerror = () => {
-                    // If image doesn't load, still remove loading state
-                    console.error('Could not load logo:', nextLogo);
-                    logoElement.classList.remove('loading');
-                    iterateButton.classList.remove('loading');
-                    // Go back to previous working logo
-                    currentLogoIndex = (currentLogoIndex - 1 + logoVariations.length) % logoVariations.length;
-                };
-                img.src = nextLogo;
-            });
+                // Fade back in
+                logoElement.classList.remove('fading');
+            }, 1000); // Wait for fade out to complete
+        }
+        
+        // Start cycling - change every 4 seconds
+        if (logoElement) {
+            setInterval(cycleLogo, 4000);
         }
         
         // ========================================
