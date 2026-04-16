@@ -284,19 +284,23 @@
 
         /* Fallback gradient for cards without images */
         .work-card:nth-child(1) .work-card-image:not([style*="background-image"]) {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f5e6d3 0%, #d4b896 100%);
         }
 
         .work-card:nth-child(2) .work-card-image:not([style*="background-image"]) {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #e8ece8 0%, #c5d4c5 100%);
         }
 
         .work-card:nth-child(3) .work-card-image:not([style*="background-image"]) {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         .work-card:nth-child(4) .work-card-image:not([style*="background-image"]) {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .work-card:nth-child(5) .work-card-image:not([style*="background-image"]) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         }
 
         .work-card-content {
@@ -609,6 +613,10 @@
                 padding: 25px;
             }
 
+            .work-card-image {
+                height: 175px;
+            }
+
             .capabilities-grid {
                 grid-template-columns: 1fr;
                 gap: 40px;
@@ -679,6 +687,7 @@
             <ul class="nav-links">
                 <li><a href="#work">Projects</a></li>
                 <li><a href="#capabilities">How</a></li>
+                <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
@@ -689,7 +698,7 @@
         <div class="hero-content">
             <div class="hero-text">
                 <h1>Building a thriving future for creatives in a rapidly changing landscape</h1>
-                <p class="hero-description">Art Experience Lab is a research and design practice that collaborates with researchers, practitioners, and product teams to discover new ways to support creative work.</p>
+                <p class="hero-description">Art Experience Lab is a research and design firm that collaborates with practitioners, communities, and organizations to discover new ways to support creative work.</p>
             </div>
             
             <!-- Interactive Generative Logo -->
@@ -704,7 +713,7 @@
     <div id="work" class="work-section-wrapper">
         <div class="work-section-header">
             <div class="section-label">Projects</div>
-            <h2 class="section-title">We lead projects at the intersection of design, technology, and community</h2>
+            <h2 class="section-title">Projects that put creative people at the center</h2>
         </div>
         
         <!-- Carousel with navigation -->
@@ -724,36 +733,56 @@
             <!-- Horizontal scroll container -->
             <div class="horizontal-scroll-container" id="work-carousel">
                 <div class="work-track">
+                    <!-- Art Here — leads the carousel -->
+                    <div class="work-card">
+                        <div class="work-card-image" style="background: linear-gradient(135deg, #f5e6d3 0%, #e8d5c0 50%, #d4b896 100%); display: flex; align-items: center; justify-content: center;">
+                            <!-- Placeholder: replace with art-here-placeholder.jpg when available -->
+                            <div style="text-align: center; padding: 40px;">
+                                <div style="font-size: 3rem; margin-bottom: 16px;">🎨</div>
+                                <div style="font-size: 1rem; color: #a0856b; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;">Art Here</div>
+                                <div style="font-size: 0.85rem; color: #b89a80; margin-top: 6px;">Currently piloting in Portland, Oregon</div>
+                            </div>
+                        </div>
+                        <div class="work-card-content">
+                            <h3>Art Here</h3>
+                            <p>A community arts initiative that connects artists with their neighbors through events and digital infrastructure — building the foundation for local creative economies. Currently piloting in Portland, Oregon.</p>
+                            <div class="work-meta">
+                                <span class="work-tag">Designing With Communities</span>
+                                <span class="work-tag">Creative Economies</span>
+                                <span class="work-tag">The Future Is Local</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="work-card">
+                        <div class="work-card-image" style="background-image: url('workshop.png'); background-size: cover; background-position: center;"></div>
+                        <div class="work-card-content">
+                            <h3>Design Workshops</h3>
+                            <p>We design and facilitate workshops and co-design sessions as part of our research and design projects — bringing together diverse stakeholders around the questions that matter to them.</p>
+                            <div class="work-meta">
+                                <span class="work-tag">Teaching</span>
+                                <span class="work-tag">Co-Design</span>
+                                <span class="work-tag">Community Building</span>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <a href="https://dschool.stanford.edu/innovate/professional-education" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">d.school →</a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="work-card">
                         <div class="work-card-image" style="background-image: url('lovegrove.jpg'); background-size: cover; background-position: center;"></div>
                         <div class="work-card-content">
                             <h3>Generative Furniture</h3>
-                            <p>Research and content strategy for a collaboration exploring how AI image generation can inform industrial design practices. Working with Google DeepMind, Ross Lovegrove, and Modem, we experimented with how AI-generated concepts translated into physical furniture prototypes. Results shaped DeepMind's product strategy for image generation.</p>
+                            <p>Embedded research with the Ross Lovegrove design studio and Google DeepMind, documenting how a world-class industrial designer integrated AI image generation into his creative process. What it unlocked, what it demanded, and what it still couldn't do — insights that shaped how DeepMind approached building AI tools for professional creatives.</p>
                             <div class="work-meta">
-                                <span class="work-tag">AI-Augmented Design</span>
-                                <span class="work-tag">Product Strategy</span>
+                                <span class="work-tag">Creative Workflows</span>
                                 <span class="work-tag">Research</span>
                                 <span class="work-tag">Content Design</span>
                             </div>
                             <div style="margin-top: 15px;">
                                 <a href="https://blog.google/innovation-and-ai/models-and-research/google-deepmind/ross-lovegrove-design/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5; margin-right: 15px;">Google Blog →</a>
-                                <a href="https://www.dezeen.com/2025/12/19/ross-lovegrove-google-deepmind-ai-chair-design/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">Dezeen Article →</a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="work-card">
-                        <div class="work-card-image" style="background-image: url('workshop.png'); background-size: cover; background-position: center;"></div>
-                        <div class="work-card-content">
-                            <h3>Design Workshops</h3>
-                            <p>Teaching design methods, including how to "make" with AI at every stage of the process: to deepen understanding, generate ideas, and test concepts. Workshops offered through Stanford d.school's professional education program.</p>
-                            <div class="work-meta">
-                                <span class="work-tag">AI-Augmented Design</span>
-                                <span class="work-tag">Teaching</span>
-                                <span class="work-tag">Curriculum Design</span>
-                            </div>
-                            <div style="margin-top: 15px;">
-                                <a href="https://dschool.stanford.edu/innovate/professional-education" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">d.school →</a>
+                                <a href="https://www.dezeen.com/2025/12/19/ross-lovegrove-google-deepmind-ai-chair-design/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">Dezeen →</a>
                             </div>
                         </div>
                     </div>
@@ -761,29 +790,16 @@
                     <div class="work-card">
                         <div class="work-card-image" style="background-image: url('Veo.png'); background-size: cover; background-position: center;"></div>
                         <div class="work-card-content">
-                            <h3>GenAI Research</h3>
-                            <p>Foundational research on how creators integrate AI image and video generation into their workflows. This research informed product strategy for Google DeepMind's Imagen and Veo models.</p>
+                            <h3>How Creators Use AI</h3>
+                            <p>Foundational research with image and video creators — from hobbyists to professionals — exploring how generative AI was entering, or not, their actual workflows. What felt beneficial, what felt concerning, and where tools consistently fell short. Conducted with Google DeepMind; findings informed the development of Imagen and Veo.</p>
                             <div class="work-meta">
-                                <span class="work-tag">AI-Augmented Design</span>
-                                <span class="work-tag">Product Strategy</span>
-                                <span class="work-tag">Research</span>
+                                <span class="work-tag">Creative Workflows</span>
+                                <span class="work-tag">Foundational Research</span>
+                                <span class="work-tag">Creator Agency</span>
                             </div>
                             <div style="margin-top: 15px;">
-                                <a href="https://blog.google/products-and-platforms/products/gemini/updated-image-editing-model/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5; margin-right: 15px;">Image Gen →</a>
-                                <a href="https://developers.googleblog.com/veo-3-now-available-gemini-api/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">Video Gen →</a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="work-card">
-                        <div class="work-card-image" style="background-image: url('codesign.jpeg'); background-size: cover; background-position: center;"></div>
-                        <div class="work-card-content">
-                            <h3>AI-Augmented Design</h3>
-                            <p>Building a community of experts and practitioners across sectors to learn together and shape the future of creative work.</p>
-                            <div class="work-meta">
-                                <span class="work-tag">AI-Augmented Design</span>
-                                <span class="work-tag">Research</span>
-                                <span class="work-tag">Community Building</span>
+                                <a href="https://blog.google/products-and-platforms/products/gemini/updated-image-editing-model/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5; margin-right: 15px;">Imagen →</a>
+                                <a href="https://developers.googleblog.com/veo-3-now-available-gemini-api/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">Veo →</a>
                             </div>
                         </div>
                     </div>
@@ -792,46 +808,46 @@
         </div>
     </div>
 
-    <!-- How Section -->
     <section id="capabilities" class="section" style="background: #fafafa;">
         <div class="section-label">How</div>
         
         <div class="capabilities-grid">
             <div class="capability">
+                <h3>Participatory Research</h3>
+                <p>We collaborate with communities, organizations, and local government to understand how to support creatives: how they work, what they need, and how they are navigating disrupted fields. We design with, not for, creative practitioners.</p>
+            </div>
+            
+            <div class="capability">
+                <h3>Product & Service Design</h3>
+                <p>We build experiences, products, and digital infrastructure grounded in research and co-designed with impacted communities — to help people learn, create, and thrive.</p>
+            </div>
+            
+            <div class="capability">
                 <h3>Workshop Design & Facilitation</h3>
-                <p>Participatory experiences that help teams prototype with emerging technologies, develop new collaborative practices, and align on strategy.</p>
+                <p>We craft and facilitate experiences: workshops, events, and design sessions that bring people together to learn, co-design, and build community.</p>
             </div>
             
             <div class="capability">
-                <h3>Foundational Research</h3>
-                <p>Qualitative and quantitative research on creative work and emerging technologies, grounded in ethics and critical inquiry. Our work informs strategy, guides decision-making, and supports sustainable futures for creative practitioners.</p>
-            </div>
-            
-            <div class="capability">
-                <h3>Multimedia Storytelling</h3>
-                <p>Translating research into compelling multimedia experiences and video narratives that bring real-world contexts to life.</p>
-            </div>
-            
-            <div class="capability">
-                <h3>Design Experiments</h3>
-                <p>Building digital and physical prototypes to explore emerging technologies—making abstract capabilities tangible and showing what's possible for creative work.</p>
+                <h3>Multimedia Storytelling & Experience Design</h3>
+                <p>We use video and multimedia as both research tools and storytelling media — creating narratives, experiences, and installations that bring ideas to life, from community stories to historical archives.</p>
             </div>
         </div>
     </section>
 
+    <!-- Bio Section -->
+    <section id="about" class="section">
+        <div class="section-label">About the Founder</div>
+        <p style="font-size: 1.2rem; color: #444; line-height: 1.8; max-width: 760px;">Art Experience Lab (AXLab) exists to ensure that creative people, and the communities around them, can grow and thrive. AXLab was founded in 2023 by Maryanna Rogers, a mixed-methods researcher and designer whose career spans Google DeepMind, Stanford d.school, Mozilla, and The Tech Museum of Innovation. A Northwestern film graduate and Stanford PhD, she grew up on the Gulf Coast, lived in the Bay Area for 15 years, and is currently based in Portland, Oregon.</p>
+        <p style="margin-top: 20px;">
+            <a href="https://www.maryannarogers.com" target="_blank" rel="noopener" style="color: #999; font-size: 0.95rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">maryannarogers.com</a>
+            <span style="color: #e5e5e5; margin: 0 12px;">·</span>
+            <a href="https://www.linkedin.com/in/maryanna-rogers-a652bb11" target="_blank" rel="noopener" style="color: #999; font-size: 0.95rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">LinkedIn</a>
+        </p>
+    </section>
+
     <!-- Collaborators Section -->
-    <section class="section">
-        <div class="section-label">Clients & Collaborators</div>
-        
-        <!-- 
-        TO ADD LOGOS:
-        1. Save logo files (PNG or SVG) to the same folder as index.html
-        2. Replace src="logo-filename.png" with your actual filename
-        3. Remove the "text-placeholder" class from the div
-        
-        Recommended: Use transparent PNG or SVG files for best results
-        Logo sources: Company press kits, Wikimedia Commons, or official brand pages
-        -->
+    <section class="section" style="padding-top: 0;">
+        <div class="section-label">Collaborators & Clients</div>
         
         <div class="carousel-wrapper">
             <button class="carousel-nav left" aria-label="Scroll left" onclick="scrollCarousel('clients-carousel', -1)">
@@ -875,6 +891,11 @@
                     <div class="client-logo">
                         <img src="Google_logo.png" alt="Google" />
                     </div>
+
+                    <div class="client-logo">
+                        <!-- Placeholder: replace with gehl_logo.png when available -->
+                        <span class="text-placeholder" style="font-size: 0.95rem; font-weight: 500; color: #999;">Gehl Architects</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -883,6 +904,7 @@
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
         <h2>Let's work together</h2>
+        <p style="color: #999; font-size: 1.1rem; margin-bottom: 30px; font-weight: 300;">Looking forward to collaborating!</p>
         <a href="mailto:hello@axlab.io" class="contact-email">hello@axlab.io</a>
     </section>
 
