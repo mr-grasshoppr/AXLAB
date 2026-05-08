@@ -535,21 +535,21 @@
         /* Responsive */
         @media (max-width: 768px) {
             .hero {
-                padding: 80px 20px 60px;
+                padding: 60px 20px 40px;
             }
 
             .hero-content {
-                flex-direction: column;
-                gap: 40px;
+                flex-direction: column-reverse;
+                gap: 20px;
                 align-items: center;
             }
 
             .hero-text {
-                text-align: center;
+                text-align: left;
             }
 
             #generative-logo {
-                height: 120px;
+                height: 80px;
             }
 
             .iterate-button {
@@ -558,27 +558,28 @@
             }
 
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
+                margin-bottom: 20px;
             }
 
             .hero-description {
-                font-size: 1.2rem;
+                font-size: 1rem;
             }
 
             .section {
-                padding: 60px 20px;
+                padding: 50px 20px;
             }
 
             .section-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
 
             .work-section-wrapper {
-                padding: 60px 0;
+                padding: 50px 0 20px;
             }
 
             .work-section-header {
-                padding: 0 20px 40px;
+                padding: 0 20px 30px;
             }
 
             .carousel-nav {
@@ -592,34 +593,35 @@
 
             .work-track {
                 flex-direction: column;
-                gap: 40px;
+                gap: 30px;
                 width: 100%;
             }
 
             .work-card {
                 width: 100%;
                 max-width: none;
+                flex-shrink: 1;
             }
 
             .work-card h3 {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
 
             .work-card p {
-                font-size: 1rem;
+                font-size: 0.95rem;
             }
 
             .work-card-content {
-                padding: 25px;
+                padding: 20px;
             }
 
             .work-card-image {
-                height: 175px;
+                height: 200px;
             }
 
             .capabilities-grid {
                 grid-template-columns: 1fr;
-                gap: 40px;
+                gap: 30px;
             }
 
             .clients-grid {
@@ -632,8 +634,8 @@
             }
 
             .nav-links {
-                gap: 20px;
-                font-size: 0.85rem;
+                gap: 16px;
+                font-size: 0.8rem;
             }
 
             .logo span {
@@ -644,14 +646,15 @@
                 height: 28px;
             }
 
-            .nav-links {
-                gap: 20px;
-            }
-
             footer {
                 flex-direction: column;
                 gap: 20px;
                 text-align: center;
+                padding: 40px 20px;
+            }
+
+            .contact-section {
+                padding: 80px 20px;
             }
 
             .contact-section h2 {
@@ -659,7 +662,7 @@
             }
 
             .contact-email {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
         }
     </style>
