@@ -61,33 +61,31 @@
         .grid-cell.clickable img { transition: transform 0.3s; }
         .grid-cell.clickable:hover img { transform: scale(1.04); }
 
-        /* Logo cells — 2 panels side by side, each 1 col wide × 2 rows tall */
+        /* Logo cells — 2 panels side by side, each 1 square (one row) */
         .logo-panel {
             overflow: hidden;
             border-radius: 6px;
             background: #0a0a0a;
-            grid-row: span 2;
             position: relative;
         }
         .logo-panel-inner {
             position: absolute; inset: 0;
-            -webkit-mask-image: url('../images/arthere-mask.png');
-            mask-image: url('../images/arthere-mask.png');
             -webkit-mask-repeat: no-repeat;
             mask-repeat: no-repeat;
-            /* Double width so each panel shows half */
-            -webkit-mask-size: 200% 100%;
-            mask-size: 200% 100%;
+            -webkit-mask-position: center;
+            mask-position: center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
         }
-        /* Left panel: A (top) and HE (bottom) — mask position 0% */
+        /* Left panel: A (top) over HE (bottom) */
         .logo-panel.left .logo-panel-inner {
-            -webkit-mask-position: 0% 0%;
-            mask-position: 0% 0%;
+            -webkit-mask-image: url('../images/arthere-mask-left.png');
+            mask-image: url('../images/arthere-mask-left.png');
         }
-        /* Right panel: RT (top) and RE (bottom) — mask position 100% */
+        /* Right panel: RT (top) over RE (bottom) */
         .logo-panel.right .logo-panel-inner {
-            -webkit-mask-position: 100% 0%;
-            mask-position: 100% 0%;
+            -webkit-mask-image: url('../images/arthere-mask-right.png');
+            mask-image: url('../images/arthere-mask-right.png');
         }
         .logo-panel-inner img {
             width: 100%; height: 100%;
@@ -190,7 +188,7 @@
     function makeLogoPanel(side, artSrc) {
         var panel = document.createElement('div');
         panel.className = 'logo-panel ' + side;
-        panel.style.height = (ROW * 2 + GAP) + 'px';
+        panel.style.height = ROW + 'px';
         var inner = document.createElement('div');
         inner.className = 'logo-panel-inner';
         var img = document.createElement('img');
@@ -213,21 +211,37 @@
         return c;
     }
 
-    // Insert a logo row: 2 logo panels + (COLS-2) artwork cells
-    function insertLogoRow(track, artPool, poolIdx, clickable) {
-        // Pick two artwork images for behind the logo panels
+    // Insert a logo row: one row tall. Logo occupies 2 adjacent columns
+    // (either the LEFT two or RIGHT two), rest of the row is artwork.
+    // alignRight=false -> logo in columns 1-2; alignRight=true -> logo in last 2 columns.
+    function insertLogoRow(track, artPool, poolIdx, clickable, alignRight) {
         var leftArt = artPool[poolIdx % artPool.length];
         var rightArt = artPool[(poolIdx + 1) % artPool.length];
-        track.appendChild(makeLogoPanel('left', leftArt.src));
-        track.appendChild(makeLogoPanel('right', rightArt.src));
-        // Fill remaining columns in both rows of this 2-row block
-        for (var r = 0; r < 2; r++) {
-            for (var c = 0; c < COLS - 2; c++) {
-                var art = artPool[(poolIdx + 2 + r * (COLS - 2) + c) % artPool.length];
+        var fillCount = COLS - 2;
+        var cells = [];
+
+        // Build the two logo panels
+        var lp = makeLogoPanel('left', leftArt.src);
+        var rp = makeLogoPanel('right', rightArt.src);
+
+        if (alignRight) {
+            // artwork first, then logo on the right
+            for (var c = 0; c < fillCount; c++) {
+                var art = artPool[(poolIdx + 2 + c) % artPool.length];
                 track.appendChild(makeCell({src: art.src, url: art.url, tall: false}, clickable));
             }
+            track.appendChild(lp);
+            track.appendChild(rp);
+        } else {
+            // logo on the left, then artwork
+            track.appendChild(lp);
+            track.appendChild(rp);
+            for (var c2 = 0; c2 < fillCount; c2++) {
+                var art2 = artPool[(poolIdx + 2 + c2) % artPool.length];
+                track.appendChild(makeCell({src: art2.src, url: art2.url, tall: false}, clickable));
+            }
         }
-        return poolIdx + 2 + 2 * (COLS - 2);
+        return poolIdx + 2 + fillCount;
     }
 
     function buildGrid(clickable) {
@@ -239,22 +253,24 @@
         var base = shuffle(ALL);
         var set = base.concat(shuffle(ALL)).concat(shuffle(ALL));
 
-        // Insert logo row first, then every 8 rows
         var imgIdx = 0;
         var rowCount = 0;
         var LOGO_EVERY = 8; // rows between logo appearances
+        var logoCount = 0;  // toggles left/right alignment
 
-        // First: logo row at top
-        imgIdx = insertLogoRow(track, set, imgIdx, clickable);
-        rowCount = 2;
+        // First: logo row at top (left-aligned)
+        imgIdx = insertLogoRow(track, set, imgIdx, clickable, false);
+        rowCount = 1;
+        logoCount = 1;
 
-        // Then artwork rows, inserting logo every LOGO_EVERY rows
         var lastWasTall = false;
         while (imgIdx < set.length) {
-            // Check if it's time for a logo row (every LOGO_EVERY rows)
             if (rowCount > 0 && rowCount % LOGO_EVERY === 0) {
-                imgIdx = insertLogoRow(track, set, imgIdx, clickable);
-                rowCount += 2;
+                // Alternate alignment each time the logo appears
+                var alignRight = (logoCount % 2 === 1);
+                imgIdx = insertLogoRow(track, set, imgIdx, clickable, alignRight);
+                rowCount += 1;
+                logoCount += 1;
             } else {
                 var art = set[imgIdx++ % set.length];
                 var useTall = art.tall && !lastWasTall;
