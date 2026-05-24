@@ -535,43 +535,62 @@
         /* Responsive */
         @media (max-width: 768px) {
             .hero {
-                padding: 60px 20px 40px;
+                padding: 70px 24px 50px;
             }
 
             .hero-content {
-                flex-direction: column-reverse;
+                flex-direction: column;
                 gap: 20px;
                 align-items: center;
             }
 
             .hero-text {
                 text-align: left;
+                order: 2;
+            }
+
+            .generative-logo-container {
+                order: 1;
             }
 
             #generative-logo {
-                height: 80px;
+                height: 140px;
+            }
+
+            .mobile-lab-name {
+                display: none;
             }
 
             .iterate-button {
-                font-size: 0.7rem;
-                padding: 3px 10px;
+                font-size: 0.85rem;
+                padding: 5px 14px;
             }
 
             .hero h1 {
-                font-size: 2rem;
-                margin-bottom: 20px;
+                font-size: 2.4rem;
+                margin-bottom: 24px;
             }
 
             .hero-description {
-                font-size: 1rem;
+                font-size: 1.15rem;
+                line-height: 1.7;
             }
 
             .section {
-                padding: 50px 20px;
+                padding: 50px 24px;
+            }
+
+            .section-label {
+                font-size: 0.9rem;
             }
 
             .section-title {
-                font-size: 1.8rem;
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+
+            .section-description {
+                font-size: 1.1rem;
             }
 
             .work-section-wrapper {
@@ -579,7 +598,7 @@
             }
 
             .work-section-header {
-                padding: 0 20px 30px;
+                padding: 0 24px 30px;
             }
 
             .carousel-nav {
@@ -588,7 +607,7 @@
 
             .horizontal-scroll-container {
                 overflow-x: visible;
-                padding: 0 20px;
+                padding: 0 24px;
             }
 
             .work-track {
@@ -604,28 +623,36 @@
             }
 
             .work-card h3 {
-                font-size: 1.2rem;
+                font-size: 1.4rem;
             }
 
             .work-card p {
-                font-size: 0.95rem;
+                font-size: 1.05rem;
+                line-height: 1.65;
             }
 
             .work-card-content {
-                padding: 20px;
+                padding: 24px;
             }
 
             .work-card-image {
-                height: 200px;
+                height: 240px;
+            }
+
+            .work-tag {
+                font-size: 0.8rem;
+            }
+
+            .capability h3 {
+                font-size: 1.3rem;
+            }
+
+            .capability p {
+                font-size: 1.05rem;
             }
 
             .capabilities-grid {
                 grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .clients-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
                 gap: 30px;
             }
 
@@ -635,7 +662,7 @@
 
             .nav-links {
                 gap: 16px;
-                font-size: 0.8rem;
+                font-size: 0.85rem;
             }
 
             .logo span {
@@ -654,15 +681,15 @@
             }
 
             .contact-section {
-                padding: 80px 20px;
+                padding: 80px 24px;
             }
 
             .contact-section h2 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
 
             .contact-email {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -703,7 +730,7 @@
                 <h1>Building a thriving future for creatives in a rapidly changing landscape</h1>
                 <p class="hero-description">Art Experience Lab is a research and design firm that collaborates with practitioners, communities, and organizations to discover new ways to support creative work.</p>
             </div>
-            
+
             <!-- Interactive Generative Logo -->
             <div class="generative-logo-container">
                 <img id="generative-logo" src="AXL_logo.png" alt="AXL Logo">
@@ -833,7 +860,7 @@
     <!-- Bio Section -->
     <section id="about" class="section">
         <div class="section-label">About</div>
-        <p style="font-size: 1.2rem; color: #444; line-height: 1.8; max-width: 760px;">Art Experience Lab (AXLab) is dedicated to ensuring that creative people, and the communities around them, can grow and thrive. AXLab was founded in 2023 by Maryanna Rogers, a mixed-methods researcher and designer whose career spans Google DeepMind, Stanford d.school, Mozilla, and The Tech Museum of Innovation. A Northwestern film graduate and Stanford PhD, she grew up on the Gulf Coast, lived in the Bay Area for 15 years, and is currently based in Portland, Oregon.</p>
+        <p style="font-size: 1.2rem; color: #444; line-height: 1.8; max-width: 760px;">Art Experience Lab (AXLab) is dedicated to helping creative people, and the communities around them, grow and thrive. AXLab was founded in 2023 by Maryanna Rogers, a mixed-methods researcher and designer whose career spans Google DeepMind, Stanford d.school, Mozilla, and The Tech Museum of Innovation. A Northwestern film graduate and Stanford PhD, she grew up on the Gulf Coast, lived in the Bay Area for 15 years, and is currently based in Portland, Oregon.</p>
         <p style="margin-top: 20px;">
             <a href="https://www.maryannarogers.com" target="_blank" rel="noopener" style="color: #999; font-size: 0.95rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">maryannarogers.com</a>
             <span style="color: #e5e5e5; margin: 0 12px;">·</span>
