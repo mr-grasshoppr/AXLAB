@@ -3,234 +3,1080 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Art Here</title>
-    <link rel="icon" type="image/png" href="images/ArtHere_favicon.png">
+    <title>Art Experience Lab</title>
+    <link rel="icon" type="image/png" href="AXL_favicon2.png">
+    
+    <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Nunito:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: #fff;
-            color: #1a1a1a;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* ---- PANCAKE NAV (top-left) ---- */
-        .top-nav {
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Optional: Background image/GIF container */
+        .background-graphic {
             position: fixed;
-            top: 0; left: 0;
+            top: 0;
+            left: 0;
             width: 100%;
-            z-index: 100;
-            padding: 22px 28px;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4; /* Adjust this to control visibility */
+            background-image: url('your-animated.gif'); /* Replace with your GIF path */
+            background-size: cover; /* or 'contain' depending on your preference */
+            background-position: center;
+            background-repeat: no-repeat;
+            display: none; /* Set to 'block' when you add your GIF */
+        }
+
+        /* Main content wrapper */
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            background: transparent;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e5e5e5;
+            z-index: 1000;
+            padding: 25px 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
         }
-        .pancake-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 4px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .pancake-btn span {
-            display: block;
-            width: 22px;
-            height: 1.5px;
-            background: #1a1a1a;
-            transition: all 0.25s;
-        }
-        .pancake-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-        .pancake-btn.open span:nth-child(2) { opacity: 0; }
-        .pancake-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-        .pancake-menu {
-            display: none;
-            position: absolute;
-            top: calc(100% + 8px);
-            left: 0;
-            background: #fff;
-            border: 1px solid #eee;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            min-width: 180px;
-            border-radius: 6px;
-            overflow: hidden;
-            z-index: 200;
-        }
-        .pancake-menu.open { display: block; }
-        .pancake-menu a {
-            display: block;
-            padding: 13px 20px;
-            font-size: 0.92rem;
-            color: #444;
-            text-decoration: none;
-            border-bottom: 1px solid #f5f5f5;
-            transition: background 0.15s, color 0.15s;
-        }
-        .pancake-menu a:last-child { border-bottom: none; }
-        .pancake-menu a:hover { background: #fafafa; color: #1a1a1a; }
-        .pancake-menu a.join { font-weight: 600; color: #1a1a1a; }
-        .menu-overlay { display: none; }
 
-        /* ---- LOGO WINDOW ---- */
-        .logo-window {
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
+        }
+
+        .logo span {
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+
+        /* Hero */
+        .hero {
+            margin-top: 80px;
+            padding: 120px 40px 100px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-content {
+            display: flex;
+            gap: 60px;
+            align-items: flex-start;
+        }
+
+        .hero-text {
             flex: 1;
+        }
+
+        /* Generative Logo */
+        .generative-logo-container {
+            flex-shrink: 0;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #generative-logo {
+            height: 200px;
+            width: auto;
+            transition: opacity 0.4s ease;
+        }
+
+        #generative-logo.loading {
+            opacity: 0.3;
+        }
+
+        .iterate-button {
+            padding: 4px 12px;
+            background: transparent;
+            color: #999;
+            border: 1px solid #e5e5e5;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 400;
+            font-style: italic;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .iterate-button:hover {
+            color: #666;
+            border-color: #ccc;
+            background: #fafafa;
+        }
+
+        .iterate-button:active {
+            background: #f0f0f0;
+        }
+
+        .iterate-button.loading {
+            opacity: 0.4;
+            cursor: wait;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            max-width: 900px;
+            margin-bottom: 40px;
+        }
+
+        .hero-description {
+            font-size: 1.5rem;
+            color: #666;
+            max-width: 700px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Sections */
+        .section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 40px;
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #999;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.7;
+            max-width: 800px;
+            margin-bottom: 30px;
+        }
+
+        /* Work Section - Horizontal Scroll */
+        .work-section-wrapper {
+            position: relative;
+            padding: 100px 0 20px;
+            overflow: hidden;
+        }
+
+        .work-section-header {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px 60px;
+        }
+
+        .horizontal-scroll-container {
+            position: relative;
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 0 40px;
+        }
+
+        .horizontal-scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .work-track {
+            display: flex;
+            gap: 40px;
+            width: max-content;
+            padding-bottom: 20px;
+        }
+
+        .work-card {
+            flex-shrink: 0;
+            width: 500px;
+            background: #ffffff;
+            border-radius: 2px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .work-card-image {
+            width: 100%;
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Fallback gradient for cards without images */
+        .work-card:nth-child(1) .work-card-image:not([style*="background-image"]) {
+            background: linear-gradient(135deg, #f5e6d3 0%, #d4b896 100%);
+        }
+
+        .work-card:nth-child(2) .work-card-image:not([style*="background-image"]) {
+            background: linear-gradient(135deg, #e8ece8 0%, #c5d4c5 100%);
+        }
+
+        .work-card:nth-child(3) .work-card-image:not([style*="background-image"]) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .work-card:nth-child(4) .work-card-image:not([style*="background-image"]) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .work-card:nth-child(5) .work-card-image:not([style*="background-image"]) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .work-card-content {
+            padding: 30px;
+        }
+
+        .work-card h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            letter-spacing: -0.01em;
+        }
+
+        .work-card p {
+            color: #666;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .work-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .work-tag {
+            font-size: 0.75rem;
+            color: #999;
+            padding: 4px 12px;
+            border: 1px solid #e5e5e5;
+            border-radius: 20px;
+        }
+
+        /* Scroll hint */
+        .scroll-hint {
+            display: none; /* Replaced with navigation arrows */
+        }
+
+        /* Carousel Navigation Arrows */
+        .carousel-wrapper {
+            position: relative;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e5e5e5;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 80px 20px 40px;
-            min-height: 70vh;
-        }
-        .logo-mask {
-            position: relative;
-            width: min(60vw, 520px);
-            aspect-ratio: 3523 / 2690;
-            overflow: hidden;
-            -webkit-mask-image: url('images/arthere-mask.png');
-            mask-image: url('images/arthere-mask.png');
-            -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-            -webkit-mask-position: center;
-            mask-position: center;
-            -webkit-mask-size: 100% 100%;
-            mask-size: 100% 100%;
-        }
-        .image-track {
-            position: absolute;
-            top: 0; left: 0;
-            height: 100%;
-            display: flex;
-            animation: slide 50s linear infinite;
-        }
-        .image-track .slide { height: 100%; flex-shrink: 0; }
-        .image-track .slide img { height: 100%; width: auto; min-width: 100%; object-fit: cover; display: block; }
-        @keyframes slide {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* ---- CITIES LIST ---- */
-        .cities-list {
-            position: fixed;
-            top: 28px;
-            left: 28px;
-            margin-top: 52px;
+            cursor: pointer;
             z-index: 10;
+            transition: all 0.3s ease;
+            opacity: 0.6;
         }
-        .city-link {
+
+        .carousel-nav:hover {
+            opacity: 1;
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-nav.left {
+            left: 10px;
+        }
+
+        .carousel-nav.right {
+            right: 10px;
+        }
+
+        .carousel-nav svg {
+            width: 20px;
+            height: 20px;
+            stroke: #1a1a1a;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        /* Capabilities */
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        @media (min-width: 1200px) {
+            .capabilities-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .capabilities-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .capability {
+            padding: 0;
+        }
+
+        .capability h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            letter-spacing: -0.01em;
+        }
+
+        .capability p {
+            color: #666;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* Clients */
+        /* Clients/Collaborators - Horizontal Scroll */
+        .clients-track {
             display: flex;
-            align-items: baseline;
-            gap: 10px;
-            padding: 5px 0;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.2s;
-        }
-        .city-link:hover .city-name { color: #1a1a1a; }
-        .city-link:hover .city-arrow { opacity: 1; transform: translateX(3px); }
-        .city-name {
-            font-family: 'Nunito', 'Arial Rounded MT Bold', Arial, sans-serif;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            transition: color 0.2s;
-        }
-        .city-name.soon { color: #ccc; }
-        .city-tag {
-            font-size: 0.7rem;
-            color: #bbb;
-            font-weight: 300;
-            letter-spacing: 0.05em;
-        }
-        .city-arrow {
-            color: #aaa;
-            font-size: 1rem;
-            opacity: 0;
-            transition: all 0.2s;
+            gap: 40px;
+            width: max-content;
+            padding-bottom: 20px;
+            align-items: center;
         }
 
-        footer {
-            padding: 32px 28px;
+        .client-logo {
+            flex-shrink: 0;
+            width: 280px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.6;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .client-logo:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .client-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%);
+            transition: filter 0.3s;
+        }
+
+        .client-logo:hover img {
+            filter: grayscale(0%);
+        }
+
+        /* Placeholder styling for text logos (remove when you add images) */
+        .client-logo .text-placeholder {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #999;
             text-align: center;
-            color: #bbb;
-            font-size: 0.78rem;
-            letter-spacing: 0.05em;
         }
 
-        @media (max-width: 600px) {
-            .logo-mask { width: min(85vw, 380px); }
-            .city-name { font-size: 1.3rem; }
+        /* Fallback grid for clients (unused now, but kept for reference) */
+        .clients-grid {
+            display: none;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: #fafafa;
+            padding: 120px 40px;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-size: 3rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 30px;
+        }
+
+        .contact-email {
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            text-decoration: none;
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 2px;
+            transition: opacity 0.3s;
+        }
+
+        .contact-email:hover {
+            opacity: 0.6;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .footer-left {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-right a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-right a:hover {
+            color: #1a1a1a;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 20px 40px;
+            }
+
+            .hero-content {
+                flex-direction: column-reverse;
+                gap: 20px;
+                align-items: center;
+            }
+
+            .hero-text {
+                text-align: left;
+            }
+
+            #generative-logo {
+                height: 80px;
+            }
+
+            .iterate-button {
+                font-size: 0.7rem;
+                padding: 3px 10px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 50px 20px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .work-section-wrapper {
+                padding: 50px 0 20px;
+            }
+
+            .work-section-header {
+                padding: 0 20px 30px;
+            }
+
+            .carousel-nav {
+                display: none;
+            }
+
+            .horizontal-scroll-container {
+                overflow-x: visible;
+                padding: 0 20px;
+            }
+
+            .work-track {
+                flex-direction: column;
+                gap: 30px;
+                width: 100%;
+            }
+
+            .work-card {
+                width: 100%;
+                max-width: none;
+                flex-shrink: 1;
+            }
+
+            .work-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .work-card p {
+                font-size: 0.95rem;
+            }
+
+            .work-card-content {
+                padding: 20px;
+            }
+
+            .work-card-image {
+                height: 200px;
+            }
+
+            .capabilities-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .clients-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 30px;
+            }
+
+            .nav-container {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                gap: 16px;
+                font-size: 0.8rem;
+            }
+
+            .logo span {
+                display: none;
+            }
+
+            .logo img {
+                height: 28px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+                padding: 40px 20px;
+            }
+
+            .contact-section {
+                padding: 80px 20px;
+            }
+
+            .contact-section h2 {
+                font-size: 2rem;
+            }
+
+            .contact-email {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Optional: Background graphic container -->
+    <!-- To use: 
+         1. Add your animated GIF to the same folder as index.html
+         2. Update the CSS above: change 'your-animated.gif' to your filename
+         3. Change 'display: none' to 'display: block' in .background-graphic CSS
+         4. Adjust opacity value to your preference (0.1 = very subtle, 0.5 = medium, 1 = full)
+    -->
+    <div class="background-graphic"></div>
+    
+    <!-- Main content wrapper -->
+    <div class="content-wrapper">
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="AXL_logo.png" alt="Art Experience Lab">
+                <span>Art Experience Lab</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#work">Projects</a></li>
+                <li><a href="#capabilities">How</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <!-- PANCAKE NAV -->
-    <div class="top-nav">
-        <div style="position:relative;">
-            <button class="pancake-btn" id="pancake-btn" aria-label="Menu">
-                <span></span><span></span><span></span>
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Building a thriving future for creatives in a rapidly changing landscape</h1>
+                <p class="hero-description">Art Experience Lab is a research and design firm that collaborates with practitioners, communities, and organizations to discover new ways to support creative work.</p>
+            </div>
+            
+            <!-- Interactive Generative Logo -->
+            <div class="generative-logo-container">
+                <img id="generative-logo" src="AXL_logo.png" alt="AXL Logo">
+                <button id="iterate-logo" class="iterate-button">Iterate!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Work Section - Horizontal Scroll -->
+    <div id="work" class="work-section-wrapper">
+        <div class="work-section-header">
+            <div class="section-label">Projects</div>
+            <h2 class="section-title">Projects that put creative people at the center</h2>
+        </div>
+        
+        <!-- Carousel with navigation -->
+        <div class="carousel-wrapper">
+            <button class="carousel-nav left" aria-label="Scroll left" onclick="scrollCarousel('work-carousel', -1)">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
             </button>
-            <div class="pancake-menu" id="pancake-menu">
-                <a href="pages/survey.html" class="join">Join Us</a>
-                <a href="pages/about.html">About</a>
-                <a href="pages/about.html#contact">Contact</a>
+            
+            <button class="carousel-nav right" aria-label="Scroll right" onclick="scrollCarousel('work-carousel', 1)">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+            
+            <!-- Horizontal scroll container -->
+            <div class="horizontal-scroll-container" id="work-carousel">
+                <div class="work-track">
+                    <!-- Art Here — leads the carousel -->
+                    <div class="work-card">
+                        <div class="work-card-image" style="background-image: url('yonghongzhong_oregonian.png'); background-size: cover; background-position: center;"></div>
+                        <div class="work-card-content">
+                            <h3>Art Here</h3>
+                            <p>A community arts initiative that connects artists with their neighbors through events and digital infrastructure — building the foundation for local creative economies. Currently piloting in Portland, Oregon.</p>
+                            <div class="work-meta">
+                                <span class="work-tag">Designing With Communities</span>
+                                <span class="work-tag">Creative Economies</span>
+                                <span class="work-tag">The Future Is Local</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="work-card">
+                        <div class="work-card-image" style="background-image: url('workshop.png'); background-size: cover; background-position: center;"></div>
+                        <div class="work-card-content">
+                            <h3>Design Workshops</h3>
+                            <p>We design and facilitate workshops and co-design sessions as part of our research and design projects — bringing together diverse stakeholders around the questions that matter to them.</p>
+                            <div class="work-meta">
+                                <span class="work-tag">Teaching</span>
+                                <span class="work-tag">Co-Design</span>
+                                <span class="work-tag">Community Building</span>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <a href="https://dschool.stanford.edu/innovate/professional-education" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">d.school →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="work-card">
+                        <div class="work-card-image" style="background-image: url('lovegrove.jpg'); background-size: cover; background-position: center;"></div>
+                        <div class="work-card-content">
+                            <h3>Generative Furniture</h3>
+                            <p>Embedded research with the Ross Lovegrove design studio and Google DeepMind, documenting how a world-class industrial designer integrated AI image generation into his creative process. What it unlocked, what it demanded, and what it still couldn't do — insights that shaped how DeepMind approached building AI tools for professional creatives.</p>
+                            <div class="work-meta">
+                                <span class="work-tag">Creative Workflows</span>
+                                <span class="work-tag">Research</span>
+                                <span class="work-tag">Content Design</span>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <a href="https://blog.google/innovation-and-ai/models-and-research/google-deepmind/ross-lovegrove-design/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5; margin-right: 15px;">Google Blog →</a>
+                                <a href="https://www.dezeen.com/2025/12/19/ross-lovegrove-google-deepmind-ai-chair-design/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">Dezeen →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="work-card">
+                        <div class="work-card-image" style="background-image: url('Veo.png'); background-size: cover; background-position: center;"></div>
+                        <div class="work-card-content">
+                            <h3>How Creators Use AI</h3>
+                            <p>Foundational research with image and video creators — from hobbyists to professionals — exploring how generative AI was entering, or not, their actual workflows. What felt beneficial, what felt concerning, and where tools consistently fell short. Conducted with Google DeepMind; findings informed the development of Imagen and Veo.</p>
+                            <div class="work-meta">
+                                <span class="work-tag">Creative Workflows</span>
+                                <span class="work-tag">Foundational Research</span>
+                                <span class="work-tag">Creator Agency</span>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <a href="https://blog.google/products-and-platforms/products/gemini/updated-image-editing-model/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5; margin-right: 15px;">Imagen →</a>
+                                <a href="https://developers.googleblog.com/veo-3-now-available-gemini-api/" target="_blank" rel="noopener" style="color: #666; font-size: 0.9rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">Veo →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- CITIES (fixed top-left under pancake) -->
-    <div class="cities-list">
-        <a href="pages/portland.html" class="city-link">
-            <span class="city-name">Portland, OR</span>
-            <span class="city-arrow">→</span>
-        </a>
-        <a href="#" class="city-link" style="cursor:default;">
-            <span class="city-name soon">Biloxi, MS</span>
-            <span class="city-tag">coming soon</span>
-        </a>
-        <a href="#" class="city-link" style="cursor:default;">
-            <span class="city-name soon">San Jose, CA</span>
-            <span class="city-tag">coming soon</span>
-        </a>
-    </div>
-
-    <div class="menu-overlay" id="menu-overlay"></div>
-
-    <!-- LOGO -->
-    <div class="logo-window">
-        <div class="logo-mask">
-            <div class="image-track">
-                <div class="slide"><img src="images/bg-art1.png" alt=""></div>
-                <div class="slide"><img src="images/bg-art2.jpg" alt=""></div>
-                <div class="slide"><img src="images/bg-art1.png" alt=""></div>
-                <div class="slide"><img src="images/bg-art2.jpg" alt=""></div>
+    <section id="capabilities" class="section" style="background: #fafafa;">
+        <div class="section-label">How</div>
+        
+        <div class="capabilities-grid">
+            <div class="capability">
+                <h3>Participatory Research</h3>
+                <p>We collaborate with communities, organizations, and local government to understand how to support creatives: how they work, what they need, and how they are navigating disrupted fields. We design with, not for, creative practitioners.</p>
+            </div>
+            
+            <div class="capability">
+                <h3>Product & Service Design</h3>
+                <p>We build experiences, products, and digital infrastructure grounded in research and co-designed with impacted communities — to help people learn, create, and thrive.</p>
+            </div>
+            
+            <div class="capability">
+                <h3>Workshop Design & Facilitation</h3>
+                <p>We craft and facilitate experiences: workshops, events, and design sessions that bring people together to learn, co-design, and build community.</p>
+            </div>
+            
+            <div class="capability">
+                <h3>Multimedia Storytelling & Experience Design</h3>
+                <p>We use video and multimedia as both research tools and storytelling media — creating narratives, experiences, and installations that bring ideas to life, from community stories to historical archives.</p>
             </div>
         </div>
+    </section>
 
-        <!-- CITIES -->
+    <!-- Bio Section -->
+    <section id="about" class="section">
+        <div class="section-label">About</div>
+        <p style="font-size: 1.2rem; color: #444; line-height: 1.8; max-width: 760px;">Art Experience Lab (AXLab) is dedicated to ensuring that creative people, and the communities around them, can grow and thrive. AXLab was founded in 2023 by Maryanna Rogers, a mixed-methods researcher and designer whose career spans Google DeepMind, Stanford d.school, Mozilla, and The Tech Museum of Innovation. A Northwestern film graduate and Stanford PhD, she grew up on the Gulf Coast, lived in the Bay Area for 15 years, and is currently based in Portland, Oregon.</p>
+        <p style="margin-top: 20px;">
+            <a href="https://www.maryannarogers.com" target="_blank" rel="noopener" style="color: #999; font-size: 0.95rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">maryannarogers.com</a>
+            <span style="color: #e5e5e5; margin: 0 12px;">·</span>
+            <a href="https://www.linkedin.com/in/maryanna-rogers-a652bb11" target="_blank" rel="noopener" style="color: #999; font-size: 0.95rem; text-decoration: none; border-bottom: 1px solid #e5e5e5;">LinkedIn</a>
+        </p>
+    </section>
+
+    <!-- Collaborators Section -->
+    <section class="section" style="padding-top: 0;">
+        <div class="section-label">Collaborators & Clients</div>
+        
+        <div class="carousel-wrapper">
+            <button class="carousel-nav left" aria-label="Scroll left" onclick="scrollCarousel('clients-carousel', -1)">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            
+            <button class="carousel-nav right" aria-label="Scroll right" onclick="scrollCarousel('clients-carousel', 1)">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+            
+            <div class="horizontal-scroll-container" id="clients-carousel">
+                <div class="clients-track">
+                    <div class="client-logo">
+                        <img src="Deepmind_logo.png" alt="Google DeepMind" />
+                    </div>
+                    
+                    <div class="client-logo">
+                        <img src="dschool_logo.jpeg" alt="Stanford d.school" />
+                    </div>
+                    
+                    <div class="client-logo">
+                        <img src="CZI_logo.png" alt="Chan Zuckerberg Initiative" />
+                    </div>
+                    
+                    <div class="client-logo">
+                        <img src="meta_logo.png" alt="Meta" />
+                    </div>
+                    
+                    <div class="client-logo">
+                        <img src="mozilla_logo.jpeg" alt="Mozilla" />
+                    </div>
+                    
+                    <div class="client-logo">
+                        <img src="Tech_logo.png" alt="The Tech Interactive" />
+                    </div>
+
+                    <div class="client-logo">
+                        <img src="Google_logo.png" alt="Google" />
+                    </div>
+
+                    <div class="client-logo">
+                        <img src="gehl_logo.png" alt="Gehl Architects" />
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-    <footer>&copy; 2026 Art Here &middot; A project of Art Experience Lab</footer>
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <h2>Let's work together</h2>
+        <p style="color: #999; font-size: 1.1rem; margin-bottom: 30px; font-weight: 300;">Looking forward to collaborating!</p>
+        <a href="mailto:hello@axlab.io" class="contact-email">hello@axlab.io</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-left">
+            © 2026 AXLab
+        </div>
+        <div class="footer-right">
+            <a href="#work">Projects</a>
+            <a href="#capabilities">How</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </footer>
+    
+    </div><!-- End content wrapper -->
 
     <script>
-    var btn = document.getElementById('pancake-btn');
-    var menu = document.getElementById('pancake-menu');
-    btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        btn.classList.toggle('open');
-        menu.classList.toggle('open');
-    });
-    document.addEventListener('click', function() {
-        btn.classList.remove('open');
-        menu.classList.remove('open');
-    });
+        // ========================================
+        // Generative Logo - Button Click
+        // ========================================
+        const logoElement = document.getElementById('generative-logo');
+        const iterateButton = document.getElementById('iterate-logo');
+        
+        if (!logoElement) {
+            console.error('Logo element not found!');
+        } else {
+            console.log('Logo element found');
+        }
+        
+        if (!iterateButton) {
+            console.error('Button element not found!');
+        } else {
+            console.log('Button element found');
+        }
+        
+        // Array of logo variations
+        const logoVariations = [
+            'AXL_logo.png',           // Original
+            'AXL_3dprint.png',
+            'AXL_ceramic.png',
+            'AXL_clips.png',
+            'AXL_cookie.png',
+            'AXL_fur.png',
+            'AXL_glass.png',
+            'AXL_ice.png',
+            'AXL_neon.png',
+            'AXL_paper.png',
+            'AXL_sketch.png',
+            'AXL_slugs.png',
+            'AXL_smoke.png',
+            'AXL_wood.png'
+        ];
+        
+        let currentLogoIndex = 0;
+        
+        console.log('Starting with', logoVariations.length, 'logo variations');
+        
+        // Preload all images
+        logoVariations.forEach((src, index) => {
+            const img = new Image();
+            img.onload = () => console.log('Preloaded:', src);
+            img.onerror = () => console.error('Failed to preload:', src);
+            img.src = src;
+        });
+        
+        if (iterateButton) {
+            iterateButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Prevent multiple clicks while loading
+                if (iterateButton.classList.contains('loading')) {
+                    console.log('Already loading, skipping...');
+                    return;
+                }
+                
+                console.log('Button clicked! Current index:', currentLogoIndex);
+                
+                // Add loading state (removes shadow, depresses button)
+                iterateButton.classList.add('loading');
+                logoElement.classList.add('loading');
+                
+                // Move to next logo
+                currentLogoIndex = (currentLogoIndex + 1) % logoVariations.length;
+                const nextLogo = logoVariations[currentLogoIndex];
+                console.log('Loading:', nextLogo);
+                
+                // Preload the image
+                const img = new Image();
+                img.onload = () => {
+                    console.log('Image loaded successfully:', nextLogo);
+                    // Smooth transition
+                    logoElement.src = nextLogo;
+                    setTimeout(() => {
+                        logoElement.classList.remove('loading');
+                        iterateButton.classList.remove('loading');
+                    }, 400);
+                };
+                img.onerror = () => {
+                    console.error('Could not load logo:', nextLogo);
+                    logoElement.classList.remove('loading');
+                    iterateButton.classList.remove('loading');
+                    // Go back to previous working logo
+                    currentLogoIndex = (currentLogoIndex - 1 + logoVariations.length) % logoVariations.length;
+                };
+                img.src = nextLogo;
+            });
+        }
+        
+        // ========================================
+        // Carousel Navigation Function
+        // ========================================
+        function scrollCarousel(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            const scrollAmount = 540; // Approximate width of one card + gap
+            carousel.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+        
+        // ========================================
+        // Smooth Horizontal Scroll
+        // ========================================
+        const horizontalContainers = document.querySelectorAll('.horizontal-scroll-container');
+        
+        horizontalContainers.forEach(container => {
+            if (container) {
+                // Smooth scroll with mouse wheel - but only if scrolling horizontally
+                container.addEventListener('wheel', (e) => {
+                    // Only prevent default if there's horizontal scrollability
+                    const hasHorizontalScroll = container.scrollWidth > container.clientWidth;
+                    
+                    if (hasHorizontalScroll && Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                        // Horizontal scroll detected
+                        e.preventDefault();
+                        container.scrollLeft += e.deltaX || e.deltaY;
+                    } else if (hasHorizontalScroll && e.deltaY !== 0) {
+                        // Vertical scroll over horizontal container
+                        // Convert vertical scroll to horizontal
+                        const atStart = container.scrollLeft === 0;
+                        const atEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth - 1;
+                        
+                        // Only hijack scroll if not at edges
+                        if (!atStart && !atEnd) {
+                            e.preventDefault();
+                            container.scrollLeft += e.deltaY;
+                        }
+                    }
+                });
+            }
+        });
+        
+        // ========================================
+        // Card Animation on Scroll
+        // ========================================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe capability cards and other elements
+        document.querySelectorAll('.capability, .work-card, .client-logo').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
     </script>
 </body>
 </html>
